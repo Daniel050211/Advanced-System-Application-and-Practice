@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+    <title>IoT Sensor</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.flexmonster.com/theme/dark/flexmonster.min.css" />
+
+    <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <h1 class="display-3 p-3 mb-2 bg-danger text-white">IoT Sensor</h1>
+
+    <div id="pivot-container"></div>
+
+    <script>
+        var flexmonster;
+        var currentReport; // Keeps track of the report structure global configurations
+
+        function processData(dataset) {
+            var result = [];
+            dataset = JSON.parse(dataset);
+            dataset.forEach(function(item) {
+                var fields = item.fields;
+                // Force temperature to floating numbers so the line chart can plot them on the Y-Axis
+                fields.temp = parseFloat(fields.temp);
+                result.push(fields);
+            });
+            return result;
+        }
+
+        function loadDashboard(data) {
+            // Save the configuration profile to a global reference variable
+            currentReport = {
+                dataSource: {
+                    type: "json",
+                    data: processData(data),
+                    mapping: {
+                        "node_id": { "caption": "ID" },
+                        "node_loc": { "caption": "Location" },
+                        "temp": { "caption": "Temperature", "type": "number" },
+                        "date_created": { "caption": "Created Date", "type": "datetime" }
+                    }
+                },
+                slice: {
+                    rows: [
+                        { uniqueName: "date_created" }
+                    ],
+                    columns: [
+                        { uniqueName: "node_loc" },
+                        { uniqueName: "[measures]", label: "Temperature" }
+                    ],
+                    measures: [
+                        {
+                            uniqueName: "temp",
+                            aggregation: "average", 
+                            format: "degree"
+                        }
+                    ]
+                },
+                formats: [
+                    {
+                        name: "degree",
+                        decimalPlaces: 2
+                    }
+                ],
+                options: {
+                    viewType: "charts",
+                    showAggregationLabels: false,
+                    grid: {
+                        showFilter: false,
+                        showHeaders: false
+                    },
+                    chart: {
+                        type: "line",
+                        title: "IoT Sensor",
+                        yAxisName: "Temperature (°C)"
+                    }
+                }
+            };
+
+            flexmonster = new Flexmonster({
+                container: "#pivot-container",
+                componentFolder: "https://cdn.flexmonster.com/",
+                toolbar: false,
+                view: "charts", 
+                report: currentReport
+            });
+        }
+
+        $.ajax({
+            url: '/dashboard/temp_data',
+            dataType: 'json',
+            success: function(data) {
+                loadDashboard(data);
+            }
+        });
+
+        function getFeed() {
+            $.ajax({
+                url: '/dashboard/temp_data',
+                dataType: 'json',
+                success: function(data) {
+                    if (flexmonster && currentReport) {
+                        // Inject fresh processed data to our report settings profile object
+                        currentReport.dataSource.data = processData(data);
+                        
+                        // Overwrite and force engine redraw of the full layout state
+                        flexmonster.setReport(currentReport); 
+                    }
+                },
+                complete: function() {
+                    setTimeout(getFeed, 10000);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            setTimeout(getFeed, 10000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
+    <title>IC2140 Landing Workspace</title> 
+
+    <style>
+        /* Crisp white canvas backdrop matching the inventory layout sheet */
+        body {
+            background-color: #ffffff !important;
+        }
+
+        /* Sets the top header navbar to match your inventory system theme */
+        .inventory-nav {
+            background-color: #212529 !important; /* Elegant dark charcoal/slate texture */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        /* Sharp, square icon design matching your inventory style */
+        .inventory-icon-box {
+            background-color: #ffffff !important;
+            border: 2px solid #dee2e6 !important; /* Standard sharp outline borders */
+            border-radius: 4px !important;
+            padding: 12px !important;
+            display: inline-block;
+        }
+
+        .inventory-title {
+            color: #212529;
+            font-weight: 700;
+        }
+
+        /* This fixed height handles text spacing safely without collapsing the box to 0px */
+        .text-container-block {
+            display: block;
+            min-height: 110px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark inventory-nav mb-4 py-3">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold">Online Inventory Management System</span>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row ms-4">
+                    <li class="nav-item me-4"><a class="nav-link text-white fw-bold active" href="/">Home</a></li>
+                    <li class="nav-item me-4"><a class="nav-link text-white-50" href="/blog/">Blog Page</a></li>
+                    <li class="nav-item me-4"><a class="nav-link text-white-50" href="/inventory/">Inventory</a></li>
+                    <li class="nav-item me-4"><a class="nav-link text-white-50" href="/admin/" target="_blank">Django Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container px-4 py-5" id="hanging-icons">
+        <h1 class="pb-2 border-bottom text-dark fw-bold inventory-title">IC2140 Workspace Hub</h1>
+        
+        <div class="row g-4 py-5 row-cols-1 row-cols-md-2 row-cols-lg-4">
+            
+            <div class="col">
+                <div class="d-flex align-items-start mb-3">
+                    <div class="inventory-icon-box text-dark flex-shrink-0 me-3">
+                        <i class="bi-clipboard" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h2 class="inventory-title h4">Home</h2>
+                    </div>
+                </div>
+                <div class="text-container-block">
+                    <p class="text-muted small">Default page shown on a website if no page is specified when user visits the site.</p>
+                </div>
+                <a href="/" class="btn btn-primary px-4 shadow-sm fw-bold">Home</a>
+            </div>
+
+            <div class="col">
+                <div class="d-flex align-items-start mb-3">
+                    <div class="inventory-icon-box text-dark flex-shrink-0 me-3">
+                        <i class="bi-card-list" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h2 class="inventory-title h4">Blog</h2>
+                    </div>
+                </div>
+                <div class="text-container-block">
+                    <p class="text-muted small">Provides a place to organize my thoughts and ideas.</p>
+                </div>
+                <a href="/blog/" class="btn btn-primary px-4 shadow-sm fw-bold">Blog</a>
+            </div>
+
+            <div class="col">
+                <div class="d-flex align-items-start mb-3">
+                    <div class="inventory-icon-box text-dark flex-shrink-0 me-3">
+                        <i class="bi-box-seam" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h2 class="inventory-title h4">Inventory</h2>
+                    </div>
+                </div>
+                <div class="text-container-block">
+                    <p class="text-muted small">Inventory spreadsheet tracking table with advanced filtering layouts.</p>
+                </div>
+                <a href="/inventory/" class="btn btn-primary px-4 shadow-sm fw-bold">Inventory</a>
+            </div>
+
+            <div class="col">
+                <div class="d-flex align-items-start mb-3">
+                    <div class="inventory-icon-box text-dark flex-shrink-0 me-3">
+                        <i class="bi-tools" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h2 class="inventory-title h4">Admin</h2>
+                    </div>
+                </div>
+                <div class="text-container-block">
+                    <p class="text-muted small">Provides an administrative backend to manage model data, manage site users, and perform other administrative tasks.</p>
+                </div>
+                <a href="/admin/" target="_blank" class="btn btn-primary px-4 shadow-sm fw-bold">Admin</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

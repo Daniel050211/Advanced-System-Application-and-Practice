@@ -1,0 +1,75 @@
+<HTML>
+    <head>
+        <title>IC2140 IoT Historical Log</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h1 { color: #333; }
+            .info-box { background-color: #f8f9fa; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; }
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+            td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+            .header-row { font-weight: bold; background-color: #eee; }
+            
+            /* Assignment 1 & 2 Warning Colors */
+            .hot-alert { color: red; font-weight: bold; }
+            .cold-alert { color: blue; font-weight: bold; }
+            .normal-data { color: rgb(13, 14, 13); }
+        </style>
+    </head>
+    <body>
+        <h1>IC2140 IoT Sensor Historical Data Log</h1>
+
+        <div class="info-box">
+            🔄 <strong>Data Pipeline Last Updated:</strong> {{ last_updated }}
+        </div>
+
+        <table>
+            <tr class="header-row">
+                <td>ID</td>
+                <td>Sensor ID</td>
+                <td>Location</td>
+                <td>Maximum Temperature</td>
+                <td>Minimum Temperature</td>
+                <td>Average Temperature</td>
+                <td>Created Date</td>
+            </tr>
+            
+            {% for stat in summary_stats %}
+            <tr>
+                <td>{{ stat.latest_id }}</td>
+                
+                <td><strong>{{ stat.latest_node }}</strong></td>
+                
+                <td>{{ stat.node_loc|upper }}</td>
+                
+                <td>
+                    {% if stat.max_temp > 29 %}
+                        <span class="hot-alert">{{ stat.max_temp }} °C (⚠️ MAX HIGH)</span>
+                    {% else %}
+                        <span class="normal-data">{{ stat.max_temp }} °C</span>
+                    {% endif %}
+                </td>
+                
+                <td>
+                    {% if stat.min_temp < 21 %}
+                        <span class="cold-alert">{{ stat.min_temp }} °C (⚠️ MIN LOW)</span>
+                    {% else %}
+                        <span class="normal-data">{{ stat.min_temp }} °C</span>
+                    {% endif %}
+                </td>
+                
+                <td>
+                    {% if stat.avg_temp > 29 %}
+                        <span class="hot-alert">{{ stat.avg_temp|floatformat:2 }} °C</span>
+                    {% elif stat.avg_temp < 21 %}
+                        <span class="cold-alert">{{ stat.avg_temp|floatformat:2 }} °C</span>
+                    {% else %}
+                        <span class="normal-data">{{ stat.avg_temp|floatformat:2 }} °C</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ stat.latest_date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</HTML>

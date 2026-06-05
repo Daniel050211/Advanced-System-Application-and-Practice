@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        
+        <title>IC2140's Assignment 1 & 2 Blog</title>
+    </head>
+    <body class="bg-light">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+            <div class="container-fluid">
+                <span class="navbar-brand"><i class="bi-cpu-fill me-2"></i>Navigation Menu</span>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row">
+                        <li class="nav-item me-4">
+                            <a class="nav-link text-white" href="/"><i class="bi-house-door me-1"></i> Home</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link text-white fw-bold active" href="/blog/"><i class="bi-chat-left-text me-1"></i> Blog Page</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link text-white" href="/inventory/"><i class="bi-box-seam me-1"></i> Inventory</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link text-white-50" href="/admin/" target="_blank"><i class="bi-shield-lock me-1"></i> Django Admin</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1 class="display-3 p-3 mb-4 bg-danger text-white rounded"><i class="bi-journal-text me-2"></i>IC2140's Blog</h1>
+            
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    {% for entry in entries %}
+                    <article class="card shadow-sm mb-4">
+                        <div class="card-header bg-primary text-white py-2">
+                            <i class="bi-calendar-event me-2"></i>{{ entry.date_posted }}
+                        </div>
+                        
+                        <div class="card-body bg-white text-dark">
+                            <p class="card-text">{{ entry.text }}</p>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <div class="alert alert-info text-center">
+                        <i class="bi-info-circle me-2"></i>No posts available yet. Try adding some logs through the admin portal!
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

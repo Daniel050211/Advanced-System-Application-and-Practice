@@ -1,0 +1,56 @@
+<HTML>
+    <head>
+        <title>IC2140 IoT Historical Log</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h1 { color: #333; }
+            .info-box { background-color: #f8f9fa; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; }
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+            td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+            .header-row { font-weight: bold; background-color: #eee; }
+            
+            /* Assignment 1 Warning Colors */
+            .hot-alert { color: red; font-weight: bold; }
+            .cold-alert { color: blue; font-weight: bold; }
+            .normal-data { color: rgb(13, 14, 13); }
+        </style>
+    </head>
+    <body>
+        <h1>IC2140 IoT Sensor Historical Data Log</h1>
+
+
+        <table>
+            <tr class="header-row">
+                <td>ID</td>
+                <td>Sensor ID</td>
+                <td>Location</td>
+                <td>Temperature</td>
+                <td>Created Date</td>
+            </tr>
+            
+            {% for event in historical_events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                
+                <td><strong>{{ event.node_id }}</strong></td>
+                
+                <td>{{ event.node_loc|upper }}</td>
+                
+                <td>
+                    {% if event.temp|add:"0" > 29 %}
+                        <span class="hot-alert">{{ event.temp }} °C (⚠️ OVERHEAT WARNING)</span>
+                    
+                    {% elif event.temp|add:"0" < 21 %}
+                        <span class="cold-alert">{{ event.temp }} °C (⚠️ FREEZE WARNING)</span>
+                    
+                    {% else %}
+                        <span class="normal-data">{{ event.temp }} °C</span>
+                    {% endif %}
+                </td>
+                
+                <td>{{ event.date_created }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</HTML>
